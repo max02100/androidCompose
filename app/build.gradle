@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -85,6 +86,9 @@ dependencies {
 
     // Image loading
     implementation("io.coil-kt:coil-compose:1.4.0")
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

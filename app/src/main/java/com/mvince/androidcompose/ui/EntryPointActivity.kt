@@ -17,6 +17,8 @@ import com.mvince.androidcompose.ui.feature.categories.FoodCategoriesScreen
 import com.mvince.androidcompose.ui.feature.categories.FoodCategoriesViewModel
 import com.mvince.androidcompose.ui.feature.category_details.FoodCategoryDetailsScreen
 import com.mvince.androidcompose.ui.feature.category_details.FoodCategoryDetailsViewModel
+import com.mvince.androidcompose.ui.feature.posts.PostViewModel
+import com.mvince.androidcompose.ui.feature.posts.PostsScreen
 import com.mvince.androidcompose.ui.theme.ComposeSampleTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -39,7 +41,7 @@ class EntryPointActivity : ComponentActivity() {
 @Composable
 private fun FoodApp() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = NavigationKeys.Route.FOOD_CATEGORIES_LIST) {
+    NavHost(navController, startDestination = NavigationKeys.Route.POSTS) {
         composable(route = NavigationKeys.Route.FOOD_CATEGORIES_LIST) {
             FoodCategoriesDestination(navController)
         }
@@ -52,6 +54,9 @@ private fun FoodApp() {
             )
         ) {
             FoodCategoryDetailsDestination()
+        }
+        composable(route = NavigationKeys.Route.POSTS) {
+            PostsDestination()
         }
     }
 }
@@ -69,6 +74,12 @@ private fun FoodCategoriesDestination(navController: NavHostController) {
 }
 
 @Composable
+private fun PostsDestination() {
+    val viewModel: PostViewModel = hiltViewModel()
+    PostsScreen(viewModel = viewModel)
+}
+
+@Composable
 private fun FoodCategoryDetailsDestination() {
     val viewModel: FoodCategoryDetailsViewModel = hiltViewModel()
     FoodCategoryDetailsScreen(viewModel.state)
@@ -82,6 +93,7 @@ object NavigationKeys {
 
     object Route {
         const val FOOD_CATEGORIES_LIST = "food_categories_list"
+        const val POSTS = "posts"
         const val FOOD_CATEGORY_DETAILS = "$FOOD_CATEGORIES_LIST/{$FOOD_CATEGORY_ID}"
     }
 }
