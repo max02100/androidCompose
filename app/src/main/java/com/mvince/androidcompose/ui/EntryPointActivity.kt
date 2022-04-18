@@ -18,6 +18,8 @@ import com.mvince.androidcompose.ui.feature.categories.FoodCategoriesScreen
 import com.mvince.androidcompose.ui.feature.categories.FoodCategoriesViewModel
 import com.mvince.androidcompose.ui.feature.category_details.FoodCategoryDetailsScreen
 import com.mvince.androidcompose.ui.feature.category_details.FoodCategoryDetailsViewModel
+import com.mvince.androidcompose.ui.feature.location.LocationScreen
+import com.mvince.androidcompose.ui.feature.location.LocationViewModel
 import com.mvince.androidcompose.ui.feature.posts.PostViewModel
 import com.mvince.androidcompose.ui.feature.posts.PostsScreen
 import com.mvince.androidcompose.ui.theme.ComposeSampleTheme
@@ -44,7 +46,7 @@ class EntryPointActivity : ComponentActivity() {
 @Composable
 private fun FoodApp() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = NavigationKeys.Route.POSTS) {
+    NavHost(navController, startDestination = NavigationKeys.Route.LOCATION) {
         composable(route = NavigationKeys.Route.FOOD_CATEGORIES_LIST) {
             FoodCategoriesDestination(navController)
         }
@@ -60,6 +62,9 @@ private fun FoodApp() {
         }
         composable(route = NavigationKeys.Route.POSTS) {
             PostsDestination()
+        }
+        composable(route = NavigationKeys.Route.LOCATION) {
+            LocationDestination()
         }
     }
 }
@@ -83,6 +88,13 @@ private fun PostsDestination() {
     PostsScreen(viewModel = viewModel)
 }
 
+@ExperimentalPermissionsApi
+@Composable
+private fun LocationDestination() {
+    val viewModel: LocationViewModel = hiltViewModel()
+    LocationScreen(viewModel = viewModel)
+}
+
 @Composable
 private fun FoodCategoryDetailsDestination() {
     val viewModel: FoodCategoryDetailsViewModel = hiltViewModel()
@@ -98,6 +110,7 @@ object NavigationKeys {
     object Route {
         const val FOOD_CATEGORIES_LIST = "food_categories_list"
         const val POSTS = "posts"
+        const val LOCATION = "location"
         const val FOOD_CATEGORY_DETAILS = "$FOOD_CATEGORIES_LIST/{$FOOD_CATEGORY_ID}"
     }
 }

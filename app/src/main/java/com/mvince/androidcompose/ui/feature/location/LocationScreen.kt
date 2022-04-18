@@ -1,7 +1,7 @@
-package com.mvince.androidcompose.ui.location
+package com.mvince.androidcompose.ui.feature.location
 
+import android.Manifest
 import android.location.Location
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,10 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.mvince.androidcompose.R
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @ExperimentalPermissionsApi
 @Composable
@@ -28,9 +26,18 @@ fun LocationScreen(viewModel: LocationViewModel) {
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val exampleEntitiesFlowLifecycleAware = remember(viewModel.getLocations(), lifecycleOwner) {
-        viewModel.getLocations().flowWithLifecycle(lifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+        viewModel.getLocations()
+            .flowWithLifecycle(lifecycleOwner.lifecycle, Lifecycle.State.STARTED)
     }
-    val userLocation: Location? by exampleEntitiesFlowLifecycleAware.collectAsState(initial = null)
+
+
+    // Location permission state
+    val locationPermissionState = rememberMultiplePermissionsState(
+        listOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    )
 
     Scaffold(
         topBar = {
@@ -47,8 +54,12 @@ fun LocationScreen(viewModel: LocationViewModel) {
             )
         },
     ) {
-        Text(text = userLocation?.let {
-            it.toString()
-        } ?: "Pas de position")
+        if (locationPermissionState.allPermissionsGranted) {
+            val userLocation: Location? by exampleEntitiesFlowLifecycleAware.collectAsState(initial = null)
+            Text(text = userLocation?.toString() ?: "Pas de position")
+        } else {
+            locationPermissionState.launchMultiplePermissionRequest()
+        }
+
     }
 }

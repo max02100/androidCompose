@@ -1,4 +1,4 @@
-package com.mvince.androidcompose
+package com.mvince.androidcompose.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,8 +16,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.shareIn
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocationManager constructor(private val context: Context, externalScope: CoroutineScope) {
+@Singleton
+class LocationManager @Inject constructor(
+    private val context: Context,
+    externalScope: CoroutineScope
+) {
     // Set up the Fused Location Provider and LocationRequest
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
     private val locationRequest = LocationRequest.create().apply {

@@ -58,6 +58,7 @@ dependencies {
 
     // Hilt
     implementation "com.google.dagger:dagger:2.40.5"
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
     kapt "com.google.dagger:dagger-compiler:2.40.5"
     api 'com.google.dagger:dagger-android:2.37'
     api 'com.google.dagger:dagger-android-support:2.37'

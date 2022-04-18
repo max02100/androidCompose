@@ -112,7 +112,7 @@ private fun FeatureThatRequiresCameraPermission() {
     when (cameraPermissionState.status) {
         // If the camera permission is granted, then show screen with the feature enabled
         PermissionStatus.Granted -> {
-            if(bitmapFromCamera.value == null) {
+            if (bitmapFromCamera.value == null) {
                 Button(onClick = { launcher.launch() }) {
                     Text("Take a picture")
                 }

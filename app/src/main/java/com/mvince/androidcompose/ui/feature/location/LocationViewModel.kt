@@ -1,4 +1,4 @@
-package com.mvince.androidcompose.ui.location
+package com.mvince.androidcompose.ui.feature.location
 
 import androidx.lifecycle.ViewModel
 import com.mvince.androidcompose.repositories.LocationRepository
