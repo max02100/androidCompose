@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.mvince.androidcompose.ui.NavigationKeys.Arg.FOOD_CATEGORY_ID
 import com.mvince.androidcompose.ui.feature.categories.FoodCategoriesScreen
 import com.mvince.androidcompose.ui.feature.categories.FoodCategoriesViewModel
@@ -24,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.receiveAsFlow
 
 // Single Activity per app
+@ExperimentalPermissionsApi
 @AndroidEntryPoint
 class EntryPointActivity : ComponentActivity() {
 
@@ -37,6 +39,7 @@ class EntryPointActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalPermissionsApi
 @Preview
 @Composable
 private fun FoodApp() {
@@ -73,6 +76,7 @@ private fun FoodCategoriesDestination(navController: NavHostController) {
     )
 }
 
+@ExperimentalPermissionsApi
 @Composable
 private fun PostsDestination() {
     val viewModel: PostViewModel = hiltViewModel()
